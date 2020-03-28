@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mShowDialogBtn;
     private CharSequence[] mAlertItem;
+    private boolean[] mSelectedItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,13 @@ public class MainActivity extends AppCompatActivity {
         mAlertItem = new CharSequence[]{
                 "Movies",
                 "Photos",
-                "Music",
-                "all"
+                "Music"
         };
+     mSelectedItem = new boolean[]{
+             false,
+             false,
+             false
+     };
 
         mShowDialogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,16 +42,26 @@ public class MainActivity extends AppCompatActivity {
                 builder.setBackground(getResources().getDrawable(R.drawable.alert_dialog_bg));
                 builder.setIcon(R.drawable.ic_sync_disabled_black_24dp);
                 //builder.setMessage("This Is A Sample Alert Dialog Example");
-                // add multi item to alertDialog radioButton
-                builder.setSingleChoiceItems(mAlertItem, 0, new DialogInterface.OnClickListener() {
+                // add multi item to alertDialog checkBox
+                builder.setMultiChoiceItems(mAlertItem, mSelectedItem, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //do something here
-                        Snackbar.make(mShowDialogBtn,"You Have Selected : "+i,Snackbar.LENGTH_LONG).show();
-                        dialogInterface.dismiss();
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                   //do something here
                     }
                 });
 
+                builder.setPositiveButton("OKEY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //do something here
+                    }
+                });
+                builder.setNegativeButton("DISMISS", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //do something here
+                    }
+                });
                 builder.show();
             }
         });
